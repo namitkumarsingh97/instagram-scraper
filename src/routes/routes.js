@@ -3,8 +3,8 @@ const puppeteer = require("puppeteer");
 
 const router = express.Router();
 
-router.post("/getPosts", async (req, res) => {
-  let { profile } = req.body;
+router.get("/getPosts", async (req, res) => {
+  let { profile } = req.query;
 
   if (!profile) {
     return res
@@ -12,10 +12,8 @@ router.post("/getPosts", async (req, res) => {
       .send({ error: "Profile URL or username is required" });
   }
 
-  // Ensure profile is a string
   profile = String(profile);
 
-  //   Extract username from profile URL if a URL is provided
   const username = profile.includes("instagram.com")
     ? profile
         .split("/")
@@ -30,13 +28,10 @@ router.post("/getPosts", async (req, res) => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    // Navigate to the instagram profile page
     await page.goto(`https://www.instagram.com/${username}/`);
 
-    // Wait for the profile page to load and display posts
     await page.waitForSelector("article");
 
-    // Scrapping post data from the profile page
     const posts = await page.evaluate(() => {
       const postElements = document.querySelectorAll("article > div img");
       const postUrls = Array.from(postElements).map((el) => el.src);
