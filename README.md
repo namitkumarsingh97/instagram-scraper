@@ -1,6 +1,6 @@
 # Instagram Scraper
 
-Instagram Scraper is a Node.js application that allows users to scrape posts from public Instagram profiles. It is built using Express.js, body-parser, cors, and Puppeteer.
+Instagram Scraper is a Node.js application that allows users to scrape posts from public Instagram profiles. It is built using Express.js, body-parser, cors, and Puppeteer
 
 ## Table of Contents
 
